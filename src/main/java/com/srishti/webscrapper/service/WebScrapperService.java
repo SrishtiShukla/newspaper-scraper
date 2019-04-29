@@ -5,6 +5,8 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
 import com.srishti.webscrapper.model.ArticleDetail;
 import com.srishti.webscrapper.repo.ArticleDetailRepo;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,13 +15,12 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
 public class WebScrapperService {
 
-    Instant start1 = Instant.now();
+    private static final Logger logger = LogManager.getLogger(WebScrapperService.class);
 
     @Autowired
     private ArticleDetailRepo articleDetailRepo;
@@ -54,7 +55,7 @@ public class WebScrapperService {
             final HtmlPage archiveHomePage = webClient.getPage(THE_HINDU_ARCHIVE_URL);
             Instant start = Instant.now();
 
-            System.out.println(" ============= Started At  " + start);
+            logger.info(" ============= Started At  " + start);
 
             List<HtmlAnchor> anchors = getLinks(archiveHomePage, "archiveWebContainer");
             for (HtmlAnchor anchor : anchors) {
@@ -67,7 +68,7 @@ public class WebScrapperService {
                         DomElement element = ((DomElement) dayArchivePageElements.get(i)).getFirstElementChild();
                         if (element instanceof HtmlAnchor) {
                             String href = ((HtmlAnchor) element).getHrefAttribute();
-                            System.out.println(" ============= Link  " + href);
+                            logger.info(" ============= Link  " + href);
                             HtmlPage articlePage = webClient.getPage(href);
                             String articleTitle = element.getTextContent();
                             String author = articlePage.getByXPath("//div[@class='author-container hidden-xs']//a[@class='auth-nm lnk']/text()").size() > 0 ?
@@ -90,17 +91,12 @@ public class WebScrapperService {
             }
 
             Instant finish = Instant.now();
-            System.out.println(" ============= Finished At  " + finish);
+            logger.info(" ============= Finished At  " + finish);
 
             long timeElapsed = Duration.between(start, finish).toMillis();
-            System.out.println(" ============= Time elapsed  " + timeElapsed);
+            logger.info(" ============= Time elapsed  " + timeElapsed);
         } catch (
                 IOException e) {
-
-            Instant finish = Instant.now();
-            System.out.println(" ============= Finished At  " + finish);
-            long timeElapsed = Duration.between(start1, finish).toMillis();
-            System.out.println(" ============= Time elapsed  " + timeElapsed);
             e.printStackTrace();
         }
 

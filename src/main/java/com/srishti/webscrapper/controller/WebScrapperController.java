@@ -2,8 +2,6 @@ package com.srishti.webscrapper.controller;
 
 import com.srishti.webscrapper.model.ArticleDetail;
 import com.srishti.webscrapper.service.WebScrapperService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -14,13 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/scrapper")
 public class WebScrapperController {
-    private static final Logger logger = LogManager.getLogger(WebScrapperController.class);
-
-    private static final String SUCCESS_MSG = "Retrieval of data successful ";
-
-    private static final String ERROR_MSG = "Fatal Error occurred while retrieving ";
-
-    private static final String NO_DATA_MSG = "No Data could be retrieved ";
 
     @Autowired
     WebScrapperService webScrapperService;

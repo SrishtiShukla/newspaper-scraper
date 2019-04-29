@@ -20,6 +20,17 @@ public class ArticleDetail {
     @Column(name = "link")
     private String link;
 
+    public ArticleDetail() {
+    }
+
+    public ArticleDetail(Long id, String title, String description, String authorName, String link) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.authorName = authorName;
+        this.link = link;
+    }
+
     public Long getId() {
         return id;
     }
