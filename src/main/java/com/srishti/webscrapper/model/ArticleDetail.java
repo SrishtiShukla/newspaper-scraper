@@ -3,16 +3,20 @@ package com.srishti.webscrapper.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "addresses")
+@Table(name = "article_detail", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"link", "author_name"})
+})
 public class ArticleDetail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "title")
     private String title;
-    @Column(name = "name")
-    private String name;
+    @Column(name = "description", columnDefinition = "LONGTEXT")
+    private String description;
+    @Column(name = "author_name")
+    private String authorName;
     @Column(name = "link")
     private String link;
 
@@ -32,12 +36,20 @@ public class ArticleDetail {
         this.title = title;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public String getLink() {
