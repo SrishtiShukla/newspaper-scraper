@@ -10,6 +10,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 
@@ -33,16 +36,19 @@ public class WebScrapperServiceTest {
         articleDetail.setDescription("Testing");
         articleDetail.setLink("Testing");
 
+        List<ArticleDetail> list = new ArrayList<>();
+        list.add(articleDetail);
+
         Mockito.when(mockArticleDetailRepo.save(any()))
                 .thenReturn(articleDetail);
-        Mockito.doReturn(mockArticleDetailRepo.findByAuthorName(anyString()));
+        Mockito.when(mockArticleDetailRepo.findByAuthorName(anyString())).thenReturn(list);
     }
 
     @Test
     public void testFindByAuthorName() {
         final String authorName = "Srishti";
-        final ArticleDetail result = webScrapperServiceUnderTest.fetchArticleByAuthor(authorName).get(0);
-        Assert.assertEquals(authorName, result.getAuthorName());
+        final List<ArticleDetail> result = webScrapperServiceUnderTest.fetchArticleByAuthor(authorName);
+        Assert.assertEquals(authorName, result.get(0).getAuthorName());
     }
 
 }
