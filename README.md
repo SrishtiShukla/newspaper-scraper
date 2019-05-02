@@ -6,6 +6,8 @@ This is a project for displaying the idea of web scraping application for a spei
 
 It was made using **Spring Boot**, **Spring Data JPA**,**Spring Data REST**, **Mockito**, **JUNIT** and **HtmlUnit**. Database is in memory **MYSql**.
 
+**HTMLUnit** allows to simulate browser events such as clicking and forms submission when scraping and it also has JavaScript support. This enhances the automation process. It also supports XPath based parsing. It can also be used for web application unit testing.
+
 ## Configuration
 
 ### Configuration Files
